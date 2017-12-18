@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.terabits.mapper.UserMapper">
+
+	<!-- sql片段对应表名,id属性值任意 -->
+	<sql id="tb">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="tablename == 'test1' ">
+				${tablename}
+			</if>
+			<if test="tablename == 'test2'">
+				${tablename}
+			</if>
+			<if test="tablename == 'test3'">
+				${tablename}
+			</if>
+			<if test="tablename == 'test4'">
+				${tablename}
+			</if>
+			<if test="tablename == 'test5'">
+				${tablename}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- sql片段对应选取准则,id属性值任意 -->
+	<sql id="criteria">
+		<where>
+			<if test="ID!=null and ID!='' ">
+				and ID=#{ID}
+			</if>
+			<if test="Name !=null and Name !='' ">
+				and Name = #{Name}
+			</if>
+			<if test="Tel !=null and Tel !='' ">
+				and Tel = #{Tel}
+			</if>
+			<if test="Balance!=-1">
+				and Balance = #{Balance}
+			</if>
+			<if test="timestamp !=null and timestamp !='' ">
+				and timestamp = #{timestamp}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- sql片段对应选取准则,id属性值任意 -->
+	<sql id="fuzzyCriteria">
+		<where>
+			<if test="ID!=null and ID!='' ">
+				and ID like CONCAT('%',#{ID},'%') 
+			</if>
+			<if test="Name !=null and Name !='' ">
+				and Name like CONCAT('%',#{Name},'%') 
+			</if>
+			<if test="Tel !=null and Tel !='' ">
+				and Tel like CONCAT('%',#{Tel},'%') 
+			</if>
+			<if test="Balance!=-1">
+				and Balance like CONCAT('%',#{Balance},'%')
+			</if>
+			<if test="timestamp !=null and timestamp !='' ">
+				and timestamp = like CONCAT('%',#{timestamp},'%')
+			</if>
+		</where>
+	</sql>
+	
+
+	<!-- sql片段对应字段名,id属性值任意 -->
+	<sql id="key">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="ID!=null and ID!='' ">
+				ID,
+			</if>
+			<if test="Name !=null and Name !='' ">
+				Name,
+			</if>
+			<if test="Tel !=null and Tel !='' ">
+				Tel,
+			</if>
+			<if test="Balance!=-1">
+				adminphone,
+			</if>
+			<if test="timestamp !=null and timestamp !='' ">
+				timestamp,
+			</if>		
+		</trim>
+	</sql>
+
+	<!-- sql片段对应?,id属性值任意 -->
+	<sql id="value">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="ID!=null and ID!='' ">
+				#{ID},
+			</if>
+			<if test="Name !=null and Name !='' ">
+				#{Name},
+			</if>
+			<if test="Tel !=null and Tel !='' ">
+				#{Tel},
+			</if>
+			<if test="Balance!=-1">
+				#{Balance},
+			</if>
+			<if test="timestamp !=null and Tel !='' ">
+				#{timestamp},
+			</if>		
+		</trim>
+	</sql>
+	
+	<!-- sql片段对应选取准则,id属性值任意 -->
+	<sql id="change">
+			<if test="ID!=null and ID!='' ">
+				and ID=#{ID}
+			</if>
+			<if test="Name !=null and Name !='' ">
+				and Name = #{Name}
+			</if>
+			<if test="Tel !=null and Tel !='' ">
+				and Tel = #{Tel}
+			</if>
+			<if test="Balance!=-1">
+				and Balance = #{Balance}
+			</if>
+			<if test="timestamp !=null and Tel !='' ">
+				and timestamp = #{timestamp}
+			</if>
+	</sql>
+	
+	<sql id="columns">
+		<trim suffixOverrides=",">
+			<if test="column1==1">
+			ID as ID,
+			</if>
+			<if test="column2==1">
+			Name as Name,
+			</if>
+			<if test="column3==1">
+			Tel as Tel,
+			</if>
+			<if test="column4==1">
+			Balance as Balance,
+			</if>
+			<if test="column5==1">
+			timestamp as timestamp,
+			</if>	
+		</trim>
+	</sql>
+	
+
+	<insert id="insertItem" parameterType="map" useGeneratedKeys="true">
+		insert into 
+		<include refid="tb"/>
+		(<include refid="key" />)
+		values
+		(<include refid="value" />)
+	</insert>
+	
+	<select id="selectItem" parameterType="map" resultType="map">
+		select *
+		from
+		<include refid="tb"/>
+		<include refid="critiria"/>
+		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="selectItemFuzzy" parameterType="map" resultMap="map">
+		select *
+		from 
+		<include refid="tb"/>
+		<include refid="fuzzyCriteria"/>
+		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
+	</select>
+		
+	<update id="updateItem" parameterType="map">
+		update 
+		<include refid="tb"/>
+		<set>
+			<include refid="change"/>
+		</set>
+		<include refid="critiria"/>
+	</update>
+	
+	<update id="updateItemFuzzy" parameterType="map">
+		update 
+		<include refid="tb"/>
+		<set>
+			<include refid="change"/>
+		</set>
+		<include refid="fuzzyCritiria"/>
+	</update>
+	
+	<delete id="deleteItem">
+		delete from
+		<include refid="tb"/>
+		<include refid="critiria"/>
+	</delete>
+	
+	<delete id="deleteItemFuzzy">
+		delete from
+		<include refid="tb"/>
+		<include refid="fuzzyCritiria"/>
+	</delete>
+
+</mapper>
+	
