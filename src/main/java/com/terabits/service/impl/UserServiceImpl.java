@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.terabits.dao.UserDAO;
 import com.terabits.service.UserService;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -35,11 +34,9 @@ public class UserServiceImpl implements UserService {
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("tablename", tablename);
-			userDAO.insertItem(map);
-			
-			jsonObject.put("info", 1);
+			jsonObject.put("info", userDAO.insertItem(map));
 			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -49,21 +46,21 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public JSONArray select(int id, String name, String tel, double balance, String timestamp, int offset, int limit, String tablename) {
+	public JSONObject select(int id, String name, String tel, double balance, String timestamp, int offset, int limit, String tablename) {
 		// TODO Auto-generated method stub
-		
+		JSONObject jsonObject = new JSONObject(); 
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ID", id);
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("offset", offset);
 			map.put("limit", limit);
 			map.put("tablename", tablename);
-			JSONArray jsonArray = JSONArray.fromObject(userDAO.selectItem(map));
-			return jsonArray;
+			jsonObject.put("info", userDAO.selectItem(map));
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -71,21 +68,22 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public JSONArray selectFuzzy(int id, String name, String tel, double balance, String timestamp, int offset,
+	public JSONObject selectFuzzy(int id, String name, String tel, double balance, String timestamp, int offset,
 			int limit, String tablename) {
 		// TODO Auto-generated method stub
+		JSONObject jsonObject = new JSONObject();
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ID", id);
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("offset", offset);
 			map.put("limit", limit);
 			map.put("tablename", tablename);
-			JSONArray jsonArray = JSONArray.fromObject(userDAO.selectItem(map));
-			return jsonArray;
+			jsonObject.put("info", userDAO.selectItemFuzzy(map));
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return null;
@@ -93,91 +91,97 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	public JSONArray update(int id, String name, String tel, double balance, String timestamp, String tablename) {
+	public JSONObject update(int idchange, String namechange, String telchange, double balancechange, String timestampchange, int id, String name, String tel, double balance, String timestamp, String tablename) {
 		// TODO Auto-generated method stub
-		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = new JSONObject();
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("IDchange", idchange);
+			map.put("Namechange", namechange);
+			map.put("Telchange", telchange);
+			map.put("Balancechange", balancechange);
+			map.put("timestampchange", timestampchange);
 			map.put("ID", id);
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("tablename", tablename);
-			userDAO.updateItem(map);
-			jsonArray.add(0, 1);
-			return jsonArray;
+			jsonObject.put("info", userDAO.updateItem(map));
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			jsonArray.add(0, 0);
-			return jsonArray;
+			jsonObject.put("info", 0);
+			return jsonObject;
 		}
 	}
 
-	public JSONArray updateFuzzy(int id, String name, String tel, double balance, String timestamp, String tablename) {
+	public JSONObject updateFuzzy(int idchange, String namechange, String telchange, double balancechange, String timestampchange, int id, String name, String tel, double balance, String timestamp, String tablename) {
 		// TODO Auto-generated method stub
-		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = new JSONObject();
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("IDchange", idchange);
+			map.put("Namechange", namechange);
+			map.put("Telchange", telchange);
+			map.put("Balancechange", balancechange);
+			map.put("timestampchange", timestampchange);
 			map.put("ID", id);
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("tablename", tablename);
-			userDAO.updateItemFuzzy(map);
-			jsonArray.add(0, 1);
-			return jsonArray;
+			jsonObject.put("info", userDAO.updateItemFuzzy(map));
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			jsonArray.add(0, 0);
-			return jsonArray;
+			jsonObject.put("info", 0);
+			return jsonObject;
 		}
 	}
 
-	public JSONArray delect(int id, String name, String tel, double balance, String timestamp, String tablename) {
+	public JSONObject delect(int id, String name, String tel, double balance, String timestamp, String tablename) {
 		// TODO Auto-generated method stub
-		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = new JSONObject();
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ID", id);
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("tablename", tablename);
-			userDAO.deleteItem(map);
-			jsonArray.add(0, 1);
-			return jsonArray;
+			jsonObject.put("info", userDAO.deleteItem(map));			
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			jsonArray.add(0, 0);
-			return jsonArray;
+			jsonObject.put("info", 0);
+			return jsonObject;
 		}
 	}
 
-	public JSONArray delectFuzzy(int id, String name, String tel, double balance, String timestamp, String tablename) {
+	public JSONObject delectFuzzy(int id, String name, String tel, double balance, String timestamp, String tablename) {
 		// TODO Auto-generated method stub
-		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = new JSONObject();
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ID", id);
 			map.put("Name", name);
 			map.put("Tel", tel);
 			map.put("Balance", balance);
-			map.put("timeistamp", timestamp);
+			map.put("timestamp", timestamp);
 			map.put("tablename", tablename);
-			userDAO.deleteItemFuzzy(map);
-			jsonArray.add(0, 1);
-			return jsonArray;
+			jsonObject.put("info", userDAO.deleteItemFuzzy(map));
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			jsonArray.add(0, 0);
-			return jsonArray;
+			jsonObject.put("info", 0);
+			return jsonObject;
 		}
 	}
 

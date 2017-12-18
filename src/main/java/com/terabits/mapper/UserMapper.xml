@@ -27,7 +27,7 @@
 	<!-- sql片段对应选取准则,id属性值任意 -->
 	<sql id="criteria">
 		<where>
-			<if test="ID!=null and ID!='' ">
+			<if test=" ID!=-1 ">
 				and ID=#{ID}
 			</if>
 			<if test="Name !=null and Name !='' ">
@@ -48,7 +48,7 @@
 	<!-- sql片段对应选取准则,id属性值任意 -->
 	<sql id="fuzzyCriteria">
 		<where>
-			<if test="ID!=null and ID!='' ">
+			<if test=" ID!=-1 ">
 				and ID like CONCAT('%',#{ID},'%') 
 			</if>
 			<if test="Name !=null and Name !='' ">
@@ -71,7 +71,7 @@
 	<sql id="key">
 		<!-- 去掉最后一个, -->
 		<trim suffixOverrides=",">
-			<if test="ID!=null and ID!='' ">
+			<if test=" ID!=-1 ">
 				ID,
 			</if>
 			<if test="Name !=null and Name !='' ">
@@ -81,7 +81,7 @@
 				Tel,
 			</if>
 			<if test="Balance!=-1">
-				adminphone,
+				Balance,
 			</if>
 			<if test="timestamp !=null and timestamp !='' ">
 				timestamp,
@@ -93,7 +93,7 @@
 	<sql id="value">
 		<!-- 去掉最后一个, -->
 		<trim suffixOverrides=",">
-			<if test="ID!=null and ID!='' ">
+			<if test=" ID!=-1 ">
 				#{ID},
 			</if>
 			<if test="Name !=null and Name !='' ">
@@ -105,7 +105,7 @@
 			<if test="Balance!=-1">
 				#{Balance},
 			</if>
-			<if test="timestamp !=null and Tel !='' ">
+			<if test="timestamp !=null and timestamp !='' ">
 				#{timestamp},
 			</if>		
 		</trim>
@@ -113,20 +113,20 @@
 	
 	<!-- sql片段对应选取准则,id属性值任意 -->
 	<sql id="change">
-			<if test="ID!=null and ID!='' ">
-				and ID=#{ID}
+			<if test=" IDchange!=-1 ">
+				ID=#{IDchange},
 			</if>
-			<if test="Name !=null and Name !='' ">
-				and Name = #{Name}
+			<if test="Namechange !=null and Namechange !='' ">
+				Name = #{Namechange},
 			</if>
-			<if test="Tel !=null and Tel !='' ">
-				and Tel = #{Tel}
+			<if test="Telchange !=null and Telchange !='' ">
+				Tel = #{Telchange},
 			</if>
-			<if test="Balance!=-1">
-				and Balance = #{Balance}
+			<if test="Balancechange!=-1">
+				Balance = #{Balancechange},
 			</if>
-			<if test="timestamp !=null and Tel !='' ">
-				and timestamp = #{timestamp}
+			<if test="timestampchange !=null and timestampchange !='' ">
+				timestamp = #{timestampchange},
 			</if>
 	</sql>
 	
@@ -163,11 +163,11 @@
 		select *
 		from
 		<include refid="tb"/>
-		<include refid="critiria"/>
+		<include refid="criteria"/>
 		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
 	</select>
 	
-	<select id="selectItemFuzzy" parameterType="map" resultMap="map">
+	<select id="selectItemFuzzy" parameterType="map" resultType="map">
 		select *
 		from 
 		<include refid="tb"/>
@@ -181,7 +181,7 @@
 		<set>
 			<include refid="change"/>
 		</set>
-		<include refid="critiria"/>
+		<include refid="criteria"/>
 	</update>
 	
 	<update id="updateItemFuzzy" parameterType="map">
@@ -190,19 +190,19 @@
 		<set>
 			<include refid="change"/>
 		</set>
-		<include refid="fuzzyCritiria"/>
+		<include refid="fuzzyCriteria"/>
 	</update>
 	
 	<delete id="deleteItem">
 		delete from
 		<include refid="tb"/>
-		<include refid="critiria"/>
+		<include refid="criteria"/>
 	</delete>
 	
 	<delete id="deleteItemFuzzy">
 		delete from
 		<include refid="tb"/>
-		<include refid="fuzzyCritiria"/>
+		<include refid="fuzzyCriteria"/>
 	</delete>
 
 </mapper>

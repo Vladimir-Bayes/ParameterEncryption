@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.terabits.service.UserService;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -50,10 +49,8 @@ public class UserController {
 			@RequestParam(value = "offset") int offset,
 			@RequestParam(value = "limit") int limit,
 			@RequestParam(value = "tablename")String tablename) throws Exception {
-		JSONArray jsonArray = userService.select(id, name, tel, balance, timestamp, offset, limit,tablename);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("info", jsonArray);
-		return jsonObject;
+		return userService.select(id, name, tel, balance, timestamp, offset, limit,tablename);
+
 	}
 	
 	@RequestMapping(value = "/select/fuzzy")
@@ -67,40 +64,42 @@ public class UserController {
 			@RequestParam(value = "offset") int offset,
 			@RequestParam(value = "limit") int limit,
 			@RequestParam(value = "tablename")String tablename) throws Exception {
-		JSONArray jsonArray = userService.select(id, name, tel, balance, timestamp, offset, limit,tablename);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("info", jsonArray);
-		return jsonObject;
+		return userService.selectFuzzy(id, name, tel, balance, timestamp, offset, limit,tablename);
+
 	}
 
 	@RequestMapping(value = "/update")
 	@ResponseBody
 	public JSONObject update(
+			@RequestParam(value = "idchange") int idchange,
+			@RequestParam(value = "namechange") String namechange,
+			@RequestParam(value = "telchange") String telchange,
+			@RequestParam(value = "balancechange") double balancechange,
+			@RequestParam(value = "timestampchange") String timestampchange,
 			@RequestParam(value = "id") int id,
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "tel") String tel,
 			@RequestParam(value = "balance") double balance,
 			@RequestParam(value = "timestamp") String timestamp,
 			@RequestParam(value = "tablename")String tablename) throws Exception {
-		JSONArray jsonArray = userService.update(id, name, tel, balance, timestamp,tablename);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("info", jsonArray);
-		return jsonObject;
+		return userService.update(idchange, namechange, telchange, balancechange, timestampchange, id, name, tel, balance, timestamp, tablename);
 	}
 	
 	@RequestMapping(value = "/update/fuzzy")
 	@ResponseBody
 	public JSONObject updatefuzzy(
+			@RequestParam(value = "idchange") int idchange,
+			@RequestParam(value = "namechange") String namechange,
+			@RequestParam(value = "telchange") String telchange,
+			@RequestParam(value = "balancechange") double balancechange,
+			@RequestParam(value = "timestampchange") String timestampchange,
 			@RequestParam(value = "id") int id,
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "tel") String tel,
 			@RequestParam(value = "balance") double balance,
 			@RequestParam(value = "timestamp") String timestamp,
 			@RequestParam(value = "tablename")String tablename) throws Exception {
-		JSONArray jsonArray = userService.updateFuzzy(id, name, tel, balance, timestamp,tablename);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("info", jsonArray);
-		return jsonObject;
+		return userService.updateFuzzy(idchange, namechange, telchange, balancechange, timestampchange, id, name, tel, balance, timestamp, tablename);
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -112,10 +111,7 @@ public class UserController {
 			@RequestParam(value = "balance") double balance,
 			@RequestParam(value = "timestamp") String timestamp,
 			@RequestParam(value = "tablename")String tablename) throws Exception {
-		JSONArray jsonArray = userService.delect(id, name, tel, balance, timestamp,tablename);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("info", jsonArray);
-		return jsonObject;
+		return userService.delect(id, name, tel, balance, timestamp,tablename);
 	}
 	
 	@RequestMapping(value = "/delete/fuzzy")
@@ -124,11 +120,9 @@ public class UserController {
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "tel") String tel,
 			@RequestParam(value = "balance") double balance,
-			@RequestParam(value = "timestamp") String timestamp) throws Exception {
-		JSONArray jsonArray = userService.delectFuzzy(id, name, tel, balance, timestamp,timestamp);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("info", jsonArray);
-		return jsonObject;
+			@RequestParam(value = "timestamp") String timestamp,
+			@RequestParam(value = "tablename")String tablename) throws Exception {
+		return userService.delectFuzzy(id, name, tel, balance, timestamp,tablename);
 	}
 	
 }
