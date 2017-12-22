@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.terabits.domain.Person;
 import com.terabits.mapper.UserMapper;
 
 /** 
@@ -81,6 +82,10 @@ public class UserDAO {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+	
+	public Person selecttest(Map<String, Object> map) throws Exception {
+		return userMapper.selecttest(map);
 	}
 
 }

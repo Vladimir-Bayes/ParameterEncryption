@@ -8,6 +8,8 @@ package com.terabits.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.terabits.domain.Person;
+
 
 public interface UserMapper {
 	
@@ -24,5 +26,7 @@ public interface UserMapper {
 	public int deleteItem(Map<String, Object> map) throws Exception;
 	
 	public int deleteItemFuzzy(Map<String, Object> map) throws Exception;
+	
+	public Person selecttest(Map<String, Object> map) throws Exception;
 
 }

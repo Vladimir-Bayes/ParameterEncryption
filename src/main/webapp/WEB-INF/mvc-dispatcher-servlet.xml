@@ -16,6 +16,8 @@
 	<!-- 静态资源(js、image等)的访问 -->
 	<mvc:default-servlet-handler />
 
+
+
 	<!-- &lt;!&ndash; 开启spring task @Scheduled 注解编程模式 &ndash;&gt; -->
 	<task:executor id="executor" pool-size="5" />
 	<task:scheduler id="scheduler" pool-size="10" />
@@ -31,5 +33,44 @@
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/" />
 	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/mainpage" />
+			<mvc:exclude-mapping path="/callback" />
+			<mvc:exclude-mapping path="/refundrec" />
+			<mvc:exclude-mapping path="/rechargerec" />
+			<mvc:exclude-mapping path="/record" />
+			<mvc:exclude-mapping path="/yuxiaohei" />
+			<mvc:exclude-mapping path="/notify" />
+			<mvc:exclude-mapping path="/rules" />
+			<mvc:exclude-mapping path="/**/*.txt" />
+			<mvc:exclude-mapping path="/**/fonts/*" />
+			<mvc:exclude-mapping path="/**/*.css" />
+			<mvc:exclude-mapping path="/**/*.js" />
+			<mvc:exclude-mapping path="/**/*.png" />
+			<mvc:exclude-mapping path="/**/*.gif" />
+			<mvc:exclude-mapping path="/**/*.jpg" />
+			<mvc:exclude-mapping path="/**/*.jpeg" />
+
+			<mvc:exclude-mapping path="/boxmanage/sendverifycode" />
+			<mvc:exclude-mapping path="/boxmanage/verification" />
+			<mvc:exclude-mapping path="/auth" />
+			<mvc:exclude-mapping path="/manage/mainpage" />
+			<mvc:exclude-mapping path="/manage/wxconfig" />
+
+			<mvc:exclude-mapping path="/insert*" />
+			<mvc:exclude-mapping path="/select*" />
+			<mvc:exclude-mapping path="/select/*" />
+			<mvc:exclude-mapping path="/update*" />
+			<mvc:exclude-mapping path="/update/*" />
+			<mvc:exclude-mapping path="/delete*" />
+			<mvc:exclude-mapping path="/delete/*" />
+
+			<bean class="com.terabits.interceptor.AuthorizedInceterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 
 </beans>

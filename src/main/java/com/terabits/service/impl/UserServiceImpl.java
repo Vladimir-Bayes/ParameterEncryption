@@ -1,6 +1,8 @@
 package com.terabits.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.terabits.dao.UserDAO;
+import com.terabits.domain.Person;
 import com.terabits.service.UserService;
 
 import net.sf.json.JSONObject;
@@ -182,6 +185,93 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 			jsonObject.put("info", 0);
 			return jsonObject;
+		}
+	}
+
+	public Map<String, Object> selecttest(int id, String name, String tel, double balance, String timestamp, int offset,
+			int limit, String tablename) {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<Map<String, Object>> maps = new ArrayList<Map<String,Object>>();
+			map.put("ID", id);
+			map.put("Name", name);
+			map.put("Tel", tel);
+			map.put("Balance", balance);
+			map.put("timestamp", timestamp);
+			map.put("offset", offset);
+			map.put("limit", limit);
+			map.put("tablename", tablename);
+			maps = userDAO.selectItemFuzzy(map);
+			return maps.get(0);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+	}
+
+	public Person selecttest1(int id, String name, String tel, double balance, String timestamp, int offset, int limit,
+			String tablename) {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<Map<String, Object>> maps = new ArrayList<Map<String,Object>>();
+			map.put("ID", id);
+			map.put("Name", name);
+			map.put("Tel", tel);
+			map.put("Balance", balance);
+			map.put("timestamp", timestamp);
+			map.put("offset", offset);
+			map.put("limit", limit);
+			map.put("tablename", tablename);
+			maps = userDAO.selectItemFuzzy(map);
+			Person person = new Person();
+			String ID;
+			String Name;
+			String Tel;
+			String Sex;
+			int Age;
+			double Money;
+			ID = maps.get(0).get("ID").toString();
+			Name = maps.get(0).get("Name").toString();
+			Tel = maps.get(0).get("Tel").toString();
+			Sex = maps.get(0).get("Sex").toString();
+			Age = Integer.valueOf( maps.get(0).get("Age").toString() );
+			Money = Double.valueOf(maps.get(0).get("Money").toString());
+			
+			person.setID(ID);
+			person.setName(Name);
+			person.setTel(Tel);
+			person.setAge(Age);
+			person.setMoney(Money);
+			person.setSex(Sex);
+			return person;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("***************************************************************************");
+			return null;
+		}
+	}
+
+	public Person selecttest2(int id, String name, String tel, double balance, String timestamp, int offset, int limit,
+			String tablename) {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("ID", id);
+			map.put("Name", name);
+			map.put("Tel", tel);
+			map.put("Balance", balance);
+			map.put("timestamp", timestamp);
+			map.put("offset", offset);
+			map.put("limit", limit);
+			map.put("tablename", tablename);
+			Person person = new Person();
+			person = userDAO.selecttest(map);
+			return person;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
 		}
 	}
 

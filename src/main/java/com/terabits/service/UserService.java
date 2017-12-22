@@ -7,6 +7,10 @@ package com.terabits.service;
 * 这里，因为没有什么特定的业务需求，所以才把数据访问写在了这里
 */
 
+import java.util.Map;
+
+import com.terabits.domain.Person;
+
 import net.sf.json.JSONObject;
 
 public interface UserService {
@@ -24,5 +28,10 @@ public interface UserService {
 	public JSONObject delect(int id, String name, String tel, double balance, String timestamp, String tablename);
 	
 	public JSONObject delectFuzzy(int id, String name, String tel, double balance, String timestamp, String tablename);
+	
+	public Map<String, Object> selecttest(int id, String name, String tel, double balance, String timestamp, int offset, int limit, String tablename);
 
+	public Person selecttest1 (int id, String name, String tel, double balance, String timestamp, int offset, int limit, String tablename);
+	
+	public Person selecttest2 (int id, String name, String tel, double balance, String timestamp, int offset, int limit, String tablename);
 }

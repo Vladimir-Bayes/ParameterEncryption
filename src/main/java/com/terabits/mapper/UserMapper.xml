@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.terabits.mapper.UserMapper">
 
+
+	<resultMap type="com.terabits.domain.Person" id="personmap">
+		<result property="ID" column="ID" javaType="java.lang.String" />
+		<result property="Name" column="Name" javaType="java.lang.String" />
+		<result property="Tel" column="Tel" javaType="java.lang.String" />
+		<result property="Sex" column="Sex" javaType="java.lang.String" />
+		<result property="Age" column="Age" javaType="java.lang.Integer" />
+		<result property="Money" column="Money" javaType="double" />
+	</resultMap>
+
 	<!-- sql片段对应表名,id属性值任意 -->
 	<sql id="tb">
 		<!-- 去掉最后一个, -->
@@ -44,18 +54,18 @@
 			</if>
 		</where>
 	</sql>
-	
+
 	<!-- sql片段对应选取准则,id属性值任意 -->
 	<sql id="fuzzyCriteria">
 		<where>
 			<if test=" ID!=-1 ">
-				and ID like CONCAT('%',#{ID},'%') 
+				and ID like CONCAT('%',#{ID},'%')
 			</if>
 			<if test="Name !=null and Name !='' ">
-				and Name like CONCAT('%',#{Name},'%') 
+				and Name like CONCAT('%',#{Name},'%')
 			</if>
 			<if test="Tel !=null and Tel !='' ">
-				and Tel like CONCAT('%',#{Tel},'%') 
+				and Tel like CONCAT('%',#{Tel},'%')
 			</if>
 			<if test="Balance!=-1">
 				and Balance like CONCAT('%',#{Balance},'%')
@@ -65,7 +75,7 @@
 			</if>
 		</where>
 	</sql>
-	
+
 
 	<!-- sql片段对应字段名,id属性值任意 -->
 	<sql id="key">
@@ -85,7 +95,7 @@
 			</if>
 			<if test="timestamp !=null and timestamp !='' ">
 				timestamp,
-			</if>		
+			</if>
 		</trim>
 	</sql>
 
@@ -107,103 +117,116 @@
 			</if>
 			<if test="timestamp !=null and timestamp !='' ">
 				#{timestamp},
-			</if>		
+			</if>
 		</trim>
 	</sql>
-	
+
 	<!-- sql片段对应选取准则,id属性值任意 -->
 	<sql id="change">
-			<if test=" IDchange!=-1 ">
-				ID=#{IDchange},
-			</if>
-			<if test="Namechange !=null and Namechange !='' ">
-				Name = #{Namechange},
-			</if>
-			<if test="Telchange !=null and Telchange !='' ">
-				Tel = #{Telchange},
-			</if>
-			<if test="Balancechange!=-1">
-				Balance = #{Balancechange},
-			</if>
-			<if test="timestampchange !=null and timestampchange !='' ">
-				timestamp = #{timestampchange},
-			</if>
+		<if test=" IDchange!=-1 ">
+			ID=#{IDchange},
+		</if>
+		<if test="Namechange !=null and Namechange !='' ">
+			Name = #{Namechange},
+		</if>
+		<if test="Telchange !=null and Telchange !='' ">
+			Tel = #{Telchange},
+		</if>
+		<if test="Balancechange!=-1">
+			Balance = #{Balancechange},
+		</if>
+		<if test="timestampchange !=null and timestampchange !='' ">
+			timestamp = #{timestampchange},
+		</if>
 	</sql>
-	
+
 	<sql id="columns">
 		<trim suffixOverrides=",">
 			<if test="column1==1">
-			ID as ID,
+				ID as ID,
 			</if>
 			<if test="column2==1">
-			Name as Name,
+				Name as Name,
 			</if>
 			<if test="column3==1">
-			Tel as Tel,
+				Tel as Tel,
 			</if>
 			<if test="column4==1">
-			Balance as Balance,
+				Balance as Balance,
 			</if>
 			<if test="column5==1">
-			timestamp as timestamp,
-			</if>	
+				timestamp as timestamp,
+			</if>
 		</trim>
 	</sql>
-	
+
 
 	<insert id="insertItem" parameterType="map" useGeneratedKeys="true">
-		insert into 
-		<include refid="tb"/>
-		(<include refid="key" />)
+		insert into
+		<include refid="tb" />
+		(
+		<include refid="key" />
+		)
 		values
-		(<include refid="value" />)
+		(
+		<include refid="value" />
+		)
 	</insert>
-	
+
 	<select id="selectItem" parameterType="map" resultType="map">
 		select *
 		from
-		<include refid="tb"/>
-		<include refid="criteria"/>
+		<include refid="tb" />
+		<include refid="criteria" />
 		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
 	</select>
-	
+
 	<select id="selectItemFuzzy" parameterType="map" resultType="map">
 		select *
-		from 
-		<include refid="tb"/>
-		<include refid="fuzzyCriteria"/>
+		from
+		<include refid="tb" />
+		<include refid="fuzzyCriteria" />
 		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
 	</select>
-		
+
 	<update id="updateItem" parameterType="map">
-		update 
-		<include refid="tb"/>
+		update
+		<include refid="tb" />
 		<set>
-			<include refid="change"/>
+			<include refid="change" />
 		</set>
-		<include refid="criteria"/>
+		<include refid="criteria" />
 	</update>
-	
+
 	<update id="updateItemFuzzy" parameterType="map">
-		update 
-		<include refid="tb"/>
+		update
+		<include refid="tb" />
 		<set>
-			<include refid="change"/>
+			<include refid="change" />
 		</set>
-		<include refid="fuzzyCriteria"/>
+		<include refid="fuzzyCriteria" />
 	</update>
-	
+
 	<delete id="deleteItem">
 		delete from
-		<include refid="tb"/>
-		<include refid="criteria"/>
+		<include refid="tb" />
+		<include refid="criteria" />
 	</delete>
-	
+
 	<delete id="deleteItemFuzzy">
 		delete from
-		<include refid="tb"/>
-		<include refid="fuzzyCriteria"/>
+		<include refid="tb" />
+		<include refid="fuzzyCriteria" />
 	</delete>
+
+	<select id="selecttest" parameterType="map" resultMap="personmap">
+		select *
+		from
+		<include refid="tb" />
+		<include refid="criteria" />
+		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
+	</select>
+
 
 </mapper>
 	
