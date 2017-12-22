@@ -17,7 +17,7 @@ public class AESUtil {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String content = "{\"sites\":{\"site\":[{\"id\":\"1\",\"name\":\"菜鸟教程\",\"url\":\"www.runoob.com\"}]}}";
-		String password = "12312312312312312";
+		String password = "545253234";
 		byte[] encodeMessage = AESJDKEncode(content, password);
 		String string = byte2hex(encodeMessage);
 		
