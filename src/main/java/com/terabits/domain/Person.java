@@ -2,10 +2,10 @@ package com.terabits.domain;
 
 
 /** 
-* @author 作者Vladimir E-mail: gyang.shines@gmail.com
-* @version 创建时间：2017年12月21日 下午9:27:05 
-* 类说明 
-*/
+ * @author 作者Vladimir E-mail: gyang.shines@gmail.com
+ * @version 创建时间：2017年12月21日 下午9:27:05 
+ * 类说明 
+ */
 public class Person {
 
 
@@ -20,7 +20,7 @@ public class Person {
 	 */
 	public Person() {
 		super();
-		
+
 	}
 	public String getID() {
 		return ID;
@@ -28,7 +28,7 @@ public class Person {
 	public void setID(String iD) {
 		ID = iD;
 	}
-	
+
 	public String getName() {
 		return Name;
 	}
@@ -66,5 +66,4 @@ public class Person {
 				+ Money + "]";
 	}
 
-	
 }

@@ -27,6 +27,6 @@ public interface UserMapper {
 	
 	public int deleteItemFuzzy(Map<String, Object> map) throws Exception;
 	
-	public Person selecttest(Map<String, Object> map) throws Exception;
+	public List<Person> selecttest(Map<String, Object> map) throws Exception;
 
 }

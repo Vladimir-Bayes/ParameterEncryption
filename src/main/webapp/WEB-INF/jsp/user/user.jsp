@@ -127,14 +127,14 @@
 		</td>
 	  </tr>
 	  <!-- 分页标签 -->
-	  <tr valign="top"><td align="center" class="font3">
+<%-- 	  <tr valign="top"><td align="center" class="font3">
 	  	 <fkjava:pager
 	  	        pageIndex="${requestScope.pageModel.pageIndex}" 
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
 	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}"/>
-	  </td></tr>
+	  </td></tr> --%>
 	</table>
 	<div style="height:10px;"></div>
 </body>

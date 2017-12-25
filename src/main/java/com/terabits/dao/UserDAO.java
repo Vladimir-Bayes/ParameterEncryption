@@ -84,8 +84,12 @@ public class UserDAO {
 		}
 	}
 	
-	public Person selecttest(Map<String, Object> map) throws Exception {
+	public List<Person> selecttest(Map<String, Object> map) throws Exception {
 		return userMapper.selecttest(map);
+	}
+	
+	public String getAESKeyByUserId(String id) throws Exception {
+		return "545253234";
 	}
 
 }

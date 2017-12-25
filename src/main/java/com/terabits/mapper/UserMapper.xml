@@ -223,8 +223,8 @@
 		select *
 		from
 		<include refid="tb" />
-		<include refid="criteria" />
-		ORDER BY `id` DESC LIMIT #{offset}, #{limit}
+	where ID = #{ID}
+
 	</select>
 
 

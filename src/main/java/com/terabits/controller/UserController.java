@@ -1,7 +1,8 @@
 package com.terabits.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.terabits.domain.Person;
+
 import com.terabits.service.UserService;
 
 import net.sf.json.JSONObject;
@@ -127,67 +128,16 @@ public class UserController {
 			@RequestParam(value = "tablename")String tablename) throws Exception {
 		return userService.delectFuzzy(id, name, tel, balance, timestamp,tablename);
 	}
+	
+	@RequestMapping(value = "/select/encrypt", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject selectencrypt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String id = request.getParameter("id");
+		String tablename = request.getParameter("tablename");
+		
+	System.out.println("controller**************");
+		return userService.selecttest(id, tablename);
 
-	@RequestMapping(value = "/select/test", method = RequestMethod.POST)
-	@ResponseBody
-	public JSONObject selecttest(
-			@RequestParam(value = "id") int id,
-			@RequestParam(value = "name") String name,
-			@RequestParam(value = "tel") String tel,
-			@RequestParam(value = "balance") double balance,
-			@RequestParam(value = "timestamp") String timestamp,
-			@RequestParam(value = "offset") int offset,
-			@RequestParam(value = "limit") int limit,
-			@RequestParam(value = "tablename")String tablename) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map = userService.selecttest(id, name, tel, balance, timestamp, offset, limit, tablename);
-		System.out.println(map);
-		System.out.println(map.toString());
-		System.out.println(map.get("Name"));
-		System.out.println(map.get("Age"));
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject;
-	}
-	
-	@RequestMapping(value = "/select/test1", method = RequestMethod.POST)
-	@ResponseBody
-	public Person selecttest1(
-			@RequestParam(value = "id") int id,
-			@RequestParam(value = "name") String name,
-			@RequestParam(value = "tel") String tel,
-			@RequestParam(value = "balance") double balance,
-			@RequestParam(value = "timestamp") String timestamp,
-			@RequestParam(value = "offset") int offset,
-			@RequestParam(value = "limit") int limit,
-			@RequestParam(value = "tablename")String tablename) throws Exception {
-		Person person = new Person();
-		person = userService.selecttest1(id, name, tel, balance, timestamp, offset, limit, tablename);
-		System.out.println(person);
-		System.out.println(person.toString());
-		System.out.println(person.getAge());
-		System.out.println(person.getName());
-		return person;
-	}
-	
-	@RequestMapping(value = "/select/test2", method = RequestMethod.POST)
-	@ResponseBody
-	public Person selecttest2(
-			@RequestParam(value = "id") int id,
-			@RequestParam(value = "name") String name,
-			@RequestParam(value = "tel") String tel,
-			@RequestParam(value = "balance") double balance,
-			@RequestParam(value = "timestamp") String timestamp,
-			@RequestParam(value = "offset") int offset,
-			@RequestParam(value = "limit") int limit,
-			@RequestParam(value = "tablename")String tablename) throws Exception {
-		Person person = new Person();
-		person = userService.selecttest2(id, name, tel, balance, timestamp, offset, limit, tablename);
-		System.out.println(person);
-		System.out.println(person.toString());
-		System.out.println(person.getAge());
-		System.out.println(person.getName());
-		System.out.println(person.getMoney());
-		System.out.println(person.getSex());
-		return person;
 	}
 }
