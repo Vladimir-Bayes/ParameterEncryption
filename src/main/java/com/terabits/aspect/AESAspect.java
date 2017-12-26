@@ -37,7 +37,6 @@ public class AESAspect {
 		Object[] args = point.getArgs();
 		
 //		因为考虑到通过ID来获取每个用户的加密密钥，所以是要么把id字段放在第一个，且不能加密，这样能允许不同的人用不同的密码
-		
 		String id = (String) args[0];
 		//      通过userDAO获取该用户的密钥
 		String key = userDAO.getAESKeyByUserId(id);
