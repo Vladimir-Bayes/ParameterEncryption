@@ -45,32 +45,12 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-	<filter>
-		<description>
-		</description>
-		<display-name>AuthenticationFilter</display-name>
-		<filter-name>AuthenticationFilter</filter-name>
-		<filter-class>com.terabits.filter.AuthenticationFilter</filter-class>
-	</filter>
-	<filter>
-		<description>
-		</description>
-		<display-name>EncrypetionFilter</display-name>
-		<filter-name>EncrypetionFilter</filter-name>
-		<filter-class>com.terabits.filter.EncrypetionFilter</filter-class>
-	</filter>
+	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthenticationFilter</filter-name>
-		<url-pattern>/AuthenticationFilter</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>EncrypetionFilter</filter-name>
-		<url-pattern>/select/fuzzy</url-pattern>
-	</filter-mapping>
+	
 	
 	<!-- jsp的配置 -->
   <jsp-config>

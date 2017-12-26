@@ -1,6 +1,7 @@
 package com.terabits.utils;
-
 import java.security.SecureRandom;
+import java.util.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -16,25 +17,28 @@ public class AESUtil {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String content = "0";
+//		String content = "{\"sites\":{\"site\":[{\"id\":\"1\",\"name\":\"菜鸟教程\",\"url\":\"www.runoob.com\"}]}}";
+//		String content = "[{\"key\":\"id\",\"value\":\"-1\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"name\",\"value\":\"A\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"tel\",\"value\":\"\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"balance\",\"value\":\"-1\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"timestamp\",\"value\":\"\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"tablename\",\"value\":\"test1\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"offset\",\"value\":\"0\",\"equals\":true,\"description\":\"\",\"enabled\":true},{\"key\":\"limit\",\"value\":\"10\",\"equals\":true,\"description\":\"\",\"enabled\":true}]";
+//		String content = "{\"info\":[{\"Tel\":\"34567890123\",\"ID\":\"4\",\"Balance\":\"44.0\",\"Name\":\"Catd\",\"timestamp\":{\"date\":18,\"day\":1,\"hours\":14,\"minutes\":31,\"month\":11,\"nanos\":0,\"seconds\":52,\"time\":1513578712000,\"timezoneOffset\":-480,\"year\":117}},{\"Tel\":\"12345678901\",\"ID\":\"1\",\"Balance\":\"14\",\"Name\":\"Ana\",\"timestamp\":{\"date\":5,\"day\":2,\"hours\":9,\"minutes\":55,\"month\":11,\"nanos\":0,\"seconds\":0,\"time\":1512438900000,\"timezoneOffset\":-480,\"year\":117}}]}";
+		String content = "[{\"ID\":\"1\",\"age\":15,\"money\":15.5,\"name\":\"Ana\",\"sex\":\"男\",\"tel\":\"12345678901\"},{\"ID\":\"1\",\"age\":16,\"money\":15.4,\"name\":\"Dog\",\"sex\":\"男\",\"tel\":\"45678901234\"}]";
 		String password = "545253234";
 		byte[] encodeMessage = AESJDKEncode(content, password);
-		String string = byte2hex(encodeMessage);
+		String string = Base64.getEncoder().encodeToString(encodeMessage);
 		
 		System.out.println("AES 加密后为："+string);
 //		实际中不太可能拿到encodeMessage这个byte数组，更多情况下，解密端拿到的都是经过编码之后的字符串，因此解密端要先解码再解密
 			
-		byte[] Message = AESUtil.hex2byte(string);	
+		byte[] Message = Base64.getDecoder().decode(string);
 		byte[] decodeMessage = AESJDKDecode(Message, password);			
 		System.out.println("AES 解密后为："+ new String(decodeMessage));
-
-		// byte2hex和hex2byte要成套地用，不然老是出问题 
 		
-		String string2 = CHexConver.byte2HexStr(encodeMessage, encodeMessage.length);
-		System.out.println("AES 加密后为："+string2);
-		byte[] Message2 = CHexConver.hexStr2Bytes(string2);
+		
+		String encrypt_dataString = "7IjjwdlC3iUyqvgbi2G2PQSUdHqossVhiSw6LicUGYDlpnx8Qp34qpubKkB+TIaA/jjz7u7u+BSH5m/TTT7AKsroTUdGK/+A7wxGYCIcTGFnhw4Eutr6MDN3iHO/68LQ+CJNeoGe2A0KtuUC2dhfIO8j3uhQvlR95qD3YmjOaJU79if89Ft2IxOEdPKDCx9CRb/y1xEfTbmsLOhw3FFUbQ==";
+		System.out.println(encrypt_dataString.equals(string));
+		
+		byte[] Message2 = Base64.getDecoder().decode(encrypt_dataString);
 		byte[] decodeMessage2 = AESJDKDecode(Message2, password);
-		System.out.println("AES 解密后为："+ new String(decodeMessage2));
+		System.out.println("AES 解密后为：" + new String(decodeMessage2));
 			
 	}
 	

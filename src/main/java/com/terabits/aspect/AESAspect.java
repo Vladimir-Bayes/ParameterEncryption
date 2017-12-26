@@ -1,5 +1,6 @@
 package com.terabits.aspect;
 
+import java.util.Base64;
 import java.util.Iterator;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.terabits.dao.UserDAO;
 import com.terabits.utils.AESUtil;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -54,37 +54,28 @@ public class AESAspect {
 		//        AESCodec.decrypt((String) args[1], key);
 		// 执行
 		System.out.println("方法执行之前***********************");
-		JSONObject jsonObject = new JSONObject();
-		JSONArray jsonArray = JSONArray.fromObject( point.proceed(args) );
-		JSONArray jsonArrayEnCrypt = new JSONArray();
+		JSONObject jsonObject_temp = JSONObject.fromObject( point.proceed(args) );
+		JSONObject jsonObject_encrypt = new JSONObject();
 		// 返回值加密
 		System.out.println("方法执行之后***********************");
-		System.out.println(jsonArray.size());
-		try {
-			Thread.sleep(2000); //millisecond
-		} catch (Exception e) {
+		System.out.println(jsonObject_temp);
+		@SuppressWarnings("unchecked")
+		Iterator<String> sIterator = jsonObject_temp.keys();
+		while(sIterator.hasNext()){  
+			//获得key  
+			String attribute = sIterator.next();  
+			// 根据key获得value, value也可以是JSONObject,JSONArray,使用对应的参数接收即可  
+			String value = jsonObject_temp.getString(attribute);  
+			System.out.println("key: "+attribute);
+			System.out.println("value: "+value);
+			//对每一个属性对应的属性值加密
+			
+			byte[] encodeMessage = AESUtil.AESJDKEncode(value, key);
+			String value_encrypt = Base64.getEncoder().encodeToString(encodeMessage);
+			jsonObject_encrypt.put(attribute, value_encrypt);
 		}
-		
-		for (int i = 0; i < jsonArray.size(); i++) {
-			JSONObject jsonObject_temp = jsonArray.getJSONObject(i);
-			JSONObject jsonObject_encrypt = new JSONObject(); 
-			@SuppressWarnings("unchecked")
-			Iterator<String> sIterator = jsonObject_temp.keys();  
-			while(sIterator.hasNext()){  
-				//获得key  
-				String attribute = sIterator.next();  
-				// 根据key获得value, value也可以是JSONObject,JSONArray,使用对应的参数接收即可  
-				String value = jsonObject_temp.getString(attribute);  
-				System.out.println("key: "+attribute+",value: "+value);  
-				//对每一个属性对应的属性值加密
-				value = AESUtil.byte2hex( AESUtil.AESJDKEncode(value, key) );
-				jsonObject_encrypt.put(attribute, value);
-			}
-			jsonArrayEnCrypt.add(jsonObject_encrypt);
-		}
-		jsonObject.put("info", jsonArrayEnCrypt);
 		
 		// 返回结果
-		return jsonObject;
+		return jsonObject_encrypt;
 	}
 }

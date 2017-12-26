@@ -14,6 +14,7 @@ import com.terabits.dao.UserDAO;
 import com.terabits.domain.Person;
 import com.terabits.service.UserService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -192,18 +193,23 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		List<Person> persons = new ArrayList<Person>();
 		try {
-			System.out.println("serviceimpl*******************");
+			System.out.println("serviceimpl****11111******");
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ID", id);
-			
+			JSONObject jsonObject = new JSONObject();
+			JSONArray jsonArray;
 			map.put("tablename", tablename);
 			persons = userDAO.selecttest(map);
-			return JSONObject.fromObject(persons);
+			System.out.println("********************"+persons);
+			jsonArray = JSONArray.fromObject(persons);
+			System.out.println("********************************************************************************************");
+			System.out.println(jsonArray+"**********************");
+			jsonObject.put("info", jsonArray);
+			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return null;
 		}
 	}
-
 
 }

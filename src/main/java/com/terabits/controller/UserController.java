@@ -128,15 +128,15 @@ public class UserController {
 			@RequestParam(value = "tablename")String tablename) throws Exception {
 		return userService.delectFuzzy(id, name, tel, balance, timestamp,tablename);
 	}
-	
+
 	@RequestMapping(value = "/select/encrypt", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject selectencrypt(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		String id = request.getParameter("id");
 		String tablename = request.getParameter("tablename");
-		
-	System.out.println("controller**************");
+
+		System.out.println("controller**************");
 		return userService.selecttest(id, tablename);
 
 	}
