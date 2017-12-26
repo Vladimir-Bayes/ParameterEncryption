@@ -29,7 +29,9 @@ public class AESAspect {
 	@Qualifier("userDAO")
 	private UserDAO userDAO;
 	@Pointcut("execution(* com.terabits.service.UserService.selecttest(..))")
-	public void messagePointcut() {}
+	public void messagePointcut() {
+		System.out.println("******************************这个函数好像没什么用********************");
+	}
 
 	@Around("messagePointcut()")
 	public JSONObject messagePointcut(ProceedingJoinPoint point) throws Throwable {
@@ -42,7 +44,7 @@ public class AESAspect {
 		String key = userDAO.getAESKeyByUserId(id);
 
 		System.out.println("对参数进行解密***************************");
-		for (int i = 1; i < args.length; i++) {
+		for (int i = 0; i < args.length; i++) {
 			byte[] Message = AESUtil.hex2byte((String) args[i]);
 			byte[] decodeMessage = AESUtil.AESJDKDecode(Message, key);
 			args[i] =  new String(decodeMessage);//AES解密
