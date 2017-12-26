@@ -35,24 +35,21 @@ public class AESAspect {
 	public JSONObject messagePointcut(ProceedingJoinPoint point) throws Throwable {
 		System.out.println("进入AOP***************************");
 		Object[] args = point.getArgs();
+		
+//		因为考虑到通过ID来获取每个用户的加密密钥，所以是要么把id字段放在第一个，且不能加密，这样能允许不同的人用不同的密码
+		
 		String id = (String) args[0];
 		//      通过userDAO获取该用户的密钥
 		String key = userDAO.getAESKeyByUserId(id);
 
 		System.out.println("对参数进行解密***************************");
-		for (int i = 0; i < args.length; i++) {
+		for (int i = 1; i < args.length; i++) {
 			byte[] Message = AESUtil.hex2byte((String) args[i]);
 			byte[] decodeMessage = AESUtil.AESJDKDecode(Message, key);
 			args[i] =  new String(decodeMessage);//AES解密
 			System.out.println(args[i]+"*******************");
 		}
 
-		//      byte[] Message = AESUtil.hex2byte((String) args[1]);
-		//		byte[] decodeMessage = AESUtil.AESJDKDecode(Message, key);
-		//		new String(decodeMessage);//AES解密
-		//        
-		//        AESCodec.decrypt((String) args[1], key);
-		// 执行
 		System.out.println("方法执行之前***********************");
 		JSONObject jsonObject_temp = JSONObject.fromObject( point.proceed(args) );
 		JSONObject jsonObject_encrypt = new JSONObject();

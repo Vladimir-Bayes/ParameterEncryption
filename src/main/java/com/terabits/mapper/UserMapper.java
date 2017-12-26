@@ -28,5 +28,7 @@ public interface UserMapper {
 	public int deleteItemFuzzy(Map<String, Object> map) throws Exception;
 	
 	public List<Person> selecttest(Map<String, Object> map) throws Exception;
+	
+	public String getPassword(String id) throws Exception; 
 
 }

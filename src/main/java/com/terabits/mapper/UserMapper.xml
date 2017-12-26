@@ -224,7 +224,10 @@
 		from
 		<include refid="tb" />
 	where ID = #{ID}
-
+	</select>
+	
+	<select id="selectPassword" parameterType="String" resultType="String">
+		select PASSWORD from tb_user where id = #{id}
 	</select>
 
 

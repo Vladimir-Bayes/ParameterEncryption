@@ -89,7 +89,7 @@ public class UserDAO {
 	}
 	
 	public String getAESKeyByUserId(String id) throws Exception {
-		return "545253234";
+		return userMapper.getPassword(id);
 	}
 
 }
