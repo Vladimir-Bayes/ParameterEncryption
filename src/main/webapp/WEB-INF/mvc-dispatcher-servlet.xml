@@ -37,14 +37,14 @@
 
 	<!--ViewResolver 视图解析器 -->
 	<!--用于支持Servlet、JSP视图解析 -->
-	<bean id="jspViewResolver"
+ 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/" />
-	</bean>
+	</bean> 
 
-	<mvc:interceptors>
+	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/mainpage" />
@@ -80,6 +80,6 @@
 
 			<bean class="com.terabits.interceptor.AuthorizedInceterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> 
 
 </beans>

@@ -58,7 +58,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/select/fuzzy", method = RequestMethod.POST)
-	//	@ResponseBody
+	@ResponseBody
 	public JSONObject selectfuzzy(
 			@RequestParam(value = "id") int id,
 			@RequestParam(value = "name") String name,

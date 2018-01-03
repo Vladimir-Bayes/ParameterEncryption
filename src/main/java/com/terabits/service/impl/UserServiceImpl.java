@@ -90,7 +90,9 @@ public class UserServiceImpl implements UserService {
 			return jsonObject;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return null;
+			e.printStackTrace();
+			jsonObject.put("info", 0);
+			return jsonObject;
 		}
 		
 	}
